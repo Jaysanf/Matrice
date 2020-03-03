@@ -21,7 +21,7 @@ def IXxX():
 	return I
 
 def determinantXxX(mat):
-	det = 1	
+	det = 1
 	signe = 0
 	if  (detcheck2(mat) == False):
 		for d in range(0,dimension-1):
@@ -32,14 +32,14 @@ def determinantXxX(mat):
 			for i in range(d+1,dimension):
 				nombre = (mat[i][d]/mat[d][d])
 				l1 = (list(map(lambda x: x*nombre,mat[d])))
-				mat[i] = [z - l for z, l in zip(mat[i], l1) ]				
+				mat[i] = [z - l for z, l in zip(mat[i], l1) ]
 		for i in range(0,dimension):
 			det *= float(mat[i][i])
 		det *= (-1)**(signe)
 	else:
 		det = 0
 	if det == -0:
-		det = 0 
+		det = 0
 	return det
 
 def transXxX(y):
@@ -77,7 +77,7 @@ def invXxX(x,I):
 			l1 = (list(map(lambda x: x*nombre, gaussj[2*d])))
 			l2 = (list(map(lambda x: x*nombre, gaussj[(2*d)+1])))
 			gaussj[2*i] = [z - l for z, l in zip(gaussj[2*i], l1)]
-			gaussj[(2*i)+1] = [z -l for z, l in 
+			gaussj[(2*i)+1] = [z -l for z, l in
 			zip(gaussj[(2*i)+1], l2) ]
 	for d in range(1,dimension):
 		for i in range(d, dimension):
@@ -85,7 +85,7 @@ def invXxX(x,I):
 			l3 = (list(map(lambda x: x*nombre, gaussj[2*(dimension-d)])))
 			l4 = (list(map(lambda x: x*nombre, gaussj[(2*(dimension-d))+1])))
 			gaussj[2*(dimension - 1 - i)] = [z - l for z, l in zip(gaussj[2*(dimension - 1 - i)], l3)]
-			gaussj[2*(dimension - 1 - i)+1] = [z -l for z, l in 
+			gaussj[2*(dimension - 1 - i)+1] = [z -l for z, l in
 			zip(gaussj[2*(dimension - 1 - i)+1], l4) ]
 	for d in range(0,dimension):
 		gaussj[2*d+1] = (list(map(lambda x: x*(1/(gaussj[2*d][d])), gaussj[2*d+1])))
@@ -119,7 +119,7 @@ while (c == 0) :
 if c == 1:
 	r = 0
 	while r == 0 :
-		mat = matriceXxX()	
+		mat = matriceXxX()
 		matT = transXxX(mat)
 		I = IXxX()
 		matI = invXxX(mat,I)
@@ -145,6 +145,6 @@ if question3 != 'NON' or  question3 != 'non' or question3 != 'Non':
 
 question4 = str(input('Voulez vous calculer la matrice inverse ? OUI ou NON'))
 if question4 != 'NON' or  question4 != 'non' or question4 != 'Non':
-	print('La matrice inverse est:')	
+	print('La matrice inverse est:')
 	for i in range(0,dimension):
 		print(matI[2*i+1])
