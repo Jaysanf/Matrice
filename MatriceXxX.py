@@ -1,5 +1,7 @@
+import copy
+from fractions import  Fraction
 def matriceXxX():
-	print("Entrez vos nombres de gauche à droite de haut en bas:")
+	print("Entrez vos nombres de gauche à droite 	de haut en bas:")
 	matXxX = []
 	for i in range(1,dimension + 1):
 		print('Entrez les chiffres de la ligne #',i)
@@ -21,7 +23,7 @@ def IXxX():
 	return I
 
 def determinantXxX(mat):
-	det = 1
+	det = 1	
 	signe = 0
 	if  (detcheck2(mat) == False):
 		for d in range(0,dimension-1):
@@ -32,14 +34,14 @@ def determinantXxX(mat):
 			for i in range(d+1,dimension):
 				nombre = (mat[i][d]/mat[d][d])
 				l1 = (list(map(lambda x: x*nombre,mat[d])))
-				mat[i] = [z - l for z, l in zip(mat[i], l1) ]
+				mat[i] = [z - l for z, l in zip(mat[i], l1) ]				
 		for i in range(0,dimension):
 			det *= float(mat[i][i])
 		det *= (-1)**(signe)
 	else:
 		det = 0
 	if det == -0:
-		det = 0
+		det = 0 
 	return det
 
 def transXxX(y):
@@ -50,7 +52,7 @@ def transXxX(y):
 			colonne.append(y[i][d])
 		mattranspose.append(colonne)
 	return mattranspose
-
+		
 def detcheck2(y):
 	mattranspose = transXxX(y)
 	for  i in range(0,dimension):
@@ -60,7 +62,7 @@ def detcheck2(y):
 		else:
 			etat1 = False
 	return etat1
-
+	
 def invXxX(x,I):
 	gaussj = []
 	for i in range(0,dimension):
@@ -77,7 +79,7 @@ def invXxX(x,I):
 			l1 = (list(map(lambda x: x*nombre, gaussj[2*d])))
 			l2 = (list(map(lambda x: x*nombre, gaussj[(2*d)+1])))
 			gaussj[2*i] = [z - l for z, l in zip(gaussj[2*i], l1)]
-			gaussj[(2*i)+1] = [z -l for z, l in
+			gaussj[(2*i)+1] = [z -l for z, l in 
 			zip(gaussj[(2*i)+1], l2) ]
 	for d in range(1,dimension):
 		for i in range(d, dimension):
@@ -85,33 +87,37 @@ def invXxX(x,I):
 			l3 = (list(map(lambda x: x*nombre, gaussj[2*(dimension-d)])))
 			l4 = (list(map(lambda x: x*nombre, gaussj[(2*(dimension-d))+1])))
 			gaussj[2*(dimension - 1 - i)] = [z - l for z, l in zip(gaussj[2*(dimension - 1 - i)], l3)]
-			gaussj[2*(dimension - 1 - i)+1] = [z -l for z, l in
+			gaussj[2*(dimension - 1 - i)+1] = [z -l for z, l in 
 			zip(gaussj[2*(dimension - 1 - i)+1], l4) ]
 	for d in range(0,dimension):
 		gaussj[2*d+1] = (list(map(lambda x: x*(1/(gaussj[2*d][d])), gaussj[2*d+1])))
 		gaussj[2*d] = (list(map(lambda x: x*(1/(gaussj[2*d][d])), gaussj[2*d])))
-		return  gaussj
+	inverse = []
+	for i in range(0,dimension):
+		inverse.append(gaussj[2*i+1])	
+	return  inverse
+		
 
-
-
+	
+	
 
 c = 0
 r = 0
 
 while (c == 0) :
-	print('Entrez une dimension X de votre matrice carré?')
+	print('Entrez une dimension X de votre matrice carré :')
 	try:
 		dimension = int(input())
 		if dimension > 0 :
 			c = 1
 		else:
 			print('Nombre invalide, - ou nul')
-			question = str(input('Réessayer? OUI ou NON'))
+			question = str(input('Réessayer? OUI ou NON :'))
 			if question == 'NON' or  question == 'non' or question == 'Non':
 				break
 	except Exception as e:
 		print("Nombre invalide", e)
-		question = str(input('Réessayer? OUI ou NON'))
+		question = str(input('Réessayer? OUI ou NON :'))
 		if question == 'NON' or  question == 'non' or question == 'Non':
 			break
 		else:
@@ -119,32 +125,40 @@ while (c == 0) :
 if c == 1:
 	r = 0
 	while r == 0 :
-		mat = matriceXxX()
-		matT = transXxX(mat)
+		mat = matriceXxX()	
+		matpourT = copy.deepcopy(mat)
+		matpourDet = copy.deepcopy(mat)
+		matpourI = copy.deepcopy(mat)
+		matT = transXxX(matpourT)
 		I = IXxX()
-		matI = invXxX(mat,I)
+		det = determinantXxX(matpourDet)
+		if det != 0:
+			matI = invXxX(matpourI,I)
 		for i in range(0,dimension):
 			print(mat[i])
-		question1 = str(input('Est-ce la bonne matrice? OUI ou NON'))
+		question1 = str(input('Est-ce la bonne matrice? OUI ou NON :'))
 		if question1 == 'NON' or  question1 == 'non' or question1 == 'Non':
 			r = 0
 		else:
 			r = 1
 
-if r == 1:
-	det = determinantXxX(mat)
-	question2 = str(input('Voulez vous calculer le déterminant? OUI ou NON'))
-	if question2 != 'NON' or  question2 != 'non' or question2 != 'Non':
-		print('Le determinant de votre matrice est ',det)
+	
 
-question3 = str(input('Voulez vous calculer la matrice transposé ? OUI ou NON'))
+question2 = str(input('Voulez vous calculer le déterminant? OUI ou NON :'))
+if question2 != 'NON' or  question2 != 'non' or question2 != 'Non':
+	print('Le determinant de votre matrice est ',det)
+		
+question3 = str(input('Voulez vous calculer la matrice transposé ? OUI ou NON :'))
 if question3 != 'NON' or  question3 != 'non' or question3 != 'Non':
 	print('La matrice transposé est:')
 	for i in range(0,dimension):
 		print(matT[i])
-
-question4 = str(input('Voulez vous calculer la matrice inverse ? OUI ou NON'))
+		
+question4 = str(input('Voulez vous calculer la matrice inverse ? OUI ou NON :'))
 if question4 != 'NON' or  question4 != 'non' or question4 != 'Non':
-	print('La matrice inverse est:')
-	for i in range(0,dimension):
-		print(matI[2*i+1])
+	if det != 0:
+		print('La matrice inverse est:')	
+		for i in range(0,dimension):
+			print(matI[i])
+	else:
+		print('''Il n'y a pas de matrice inverse, car le déterminant est égale à 0 ''')
